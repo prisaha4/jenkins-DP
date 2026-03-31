@@ -1,0 +1,45 @@
+pipeline
+	{
+		agent any
+		stages
+		{
+			stage("Continouse Download")
+			{
+				steps
+				{
+					git 'https://github.com/balajimanipi/maven1.git'
+				}
+			}
+			stage("Continouse Build")
+			{
+				steps
+				{
+					sh 'mvn package'
+        				
+				}
+			}
+			stage("Continouse Delivery")
+			{
+				steps
+				{
+					 sh 'scp /var/lib/jenkins/workspace/S-pipeline/webapp/target/webapp.war root@192.168.75.130:/var/lib/tomcat9/webapps/qaenv.war'
+				}
+			}
+			stage("Continouse Test")
+			{
+				steps
+				{
+					git 'https://github.com/balajimanipi/FunctionlTesting.git'
+        				sh 'java -jar /var/lib/jenkins/workspace/S-pipeline/testing.jar'
+				}
+			}
+			stage("Continouse Deploy")
+			{
+				steps
+				{
+					        input message: 'Waiting for Approval from the DM', submitter: 'srinivas'
+        					sh 'scp /var/lib/jenkins/workspace/S-pipeline/webapp/target/webapp.war root@192.168.75.132:/var/lib/tomcat9/webapps/proenv.war'
+				}
+			}
+		}
+	}

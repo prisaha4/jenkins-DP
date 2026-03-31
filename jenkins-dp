@@ -22,7 +22,7 @@ pipeline
 			{
 				steps
 				{
-					 sh 'scp /var/lib/jenkins/workspace/S-pipeline/webapp/target/webapp.war root@192.168.75.130:/var/lib/tomcat9/webapps/qaenv.war'
+					 sh 'scp /var/lib/jenkins/workspace/S-pipeline/webapp/target/webapp.war root@192.168.175.129:/var/lib/tomcat9/webapps/qaenv.war'
 				}
 			}
 			stage("Continouse Test")
@@ -38,7 +38,7 @@ pipeline
 				steps
 				{
 					        input message: 'Waiting for Approval from the DM', submitter: 'srinivas'
-        					sh 'scp /var/lib/jenkins/workspace/S-pipeline/webapp/target/webapp.war root@192.168.75.132:/var/lib/tomcat9/webapps/proenv.war'
+        					sh 'scp /var/lib/jenkins/workspace/S-pipeline/webapp/target/webapp.war root@192.168.175.130:/var/lib/tomcat9/webapps/proenv.war'
 				}
 			}
 		}
